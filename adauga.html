@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generator linii produs – trpbuy</title>
+<style>
+:root{--bg:#EEF2EC;--card:#fff;--ink:#1B2634;--mute:#5B6878;--line:#D5DDD3;--acc:#2F4BFF}
+@media (prefers-color-scheme:dark){:root{--bg:#141B26;--card:#1E2837;--ink:#EAF0F7;--mute:#9AA8BA;--line:#2C394C;--acc:#7C90FF}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif;padding:20px}
+main{max-width:640px;margin:0 auto}h1{font-size:26px;margin:0 0 6px}p{color:var(--mute);margin:0 0 18px}
+form,.out{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:12px;margin-bottom:18px}
+label{display:grid;gap:4px;font-weight:600;font-size:14px}label small{font-weight:400;color:var(--mute)}
+input,select,textarea{font:inherit;color:inherit;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);width:100%}
+textarea{font-family:ui-monospace,Consolas,monospace;font-size:13px;min-height:150px}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:11px 16px;cursor:pointer;background:var(--acc);color:#fff}
+button.g{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.r{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:560px){.r{grid-template-columns:1fr}}
+.b{display:flex;gap:10px;flex-wrap:wrap}#m{color:var(--mute);font-size:14px}
+</style></head><body><main>
+<h1>Generator linii produs</h1>
+<p>Completezi datele produsului, apeși „Generează linia" și copiezi rezultatul în <b>index.html</b>, chiar sub <code>let P=[</code>.</p>
+<form id="f">
+<div class="r"><label>Nume produs<input name="n" required></label><label>Marcă <small>(lasă gol dacă nu are)</small><input name="b" placeholder="Unbranded"></label></div>
+<div class="r"><label>Categorie<select name="c" required><option>Accessories</option><option>Archive</option><option>Backpacks</option><option>Bags</option><option>Boots</option><option>Girl</option><option>Hoodies</option><option>IG Brands</option><option>Jackets</option><option>Jeans &amp; Pants</option><option>Jewellery</option><option>Longsleeves</option><option>Polo Shirts</option><option>Puffer</option><option>Room Decoration</option><option>Sets</option><option>Shirts</option><option>Shoes</option><option>Shorts</option><option>Slides</option><option>Socks</option><option>Sweaters</option><option>Sweats</option><option>Underwear</option><option>Zip-Ups</option></select></label><label>Preț ($)<input name="p" type="number" min="0" step="any" required></label></div>
+<label>Link<input name="u" type="url" placeholder="https://..." required></label>
+<label>Nume poză <small>(exact ca fișierul încărcat în GitHub, de ex. hanorac-1.jpg; poate rămâne gol)</small><input name="img" placeholder="hanorac-1.jpg"></label>
+<div class="b"><button type="submit">Generează linia</button></div>
+</form>
+<div class="out"><label>Liniile generate <small>(se adună aici; le copiezi pe toate odată)</small><textarea id="o" readonly></textarea></label>
+<div class="b"><button id="cp" type="button">Copiază tot</button><button class="g" id="cl" type="button">Golește</button><span id="m" role="status"></span></div></div>
+</main>
+<script>
+const COLS=["#CFE3D4","#F7D9C4","#C9D7F2","#F2CFD6","#E4D3C0","#D8CFF2"],$=s=>document.querySelector(s),o=$("#o"),m=$("#m");
+$("#f").onsubmit=e=>{e.preventDefault();const f=e.target,v=k=>f[k].value.trim(),c=v("c");
+const img=v("img").replace(/\s+/g,"-");
+let l='{id:"'+Date.now().toString(36)+'",n:'+JSON.stringify(v("n"))+',b:'+JSON.stringify(v("b")||"Unbranded")+',c:'+JSON.stringify(c)+',u:'+JSON.stringify(v("u"))+',p:'+Number(v("p"))+(img?',img:'+JSON.stringify(img):'')+',col:"'+COLS[[...c].reduce((a,x)=>a+x.charCodeAt(0),0)%COLS.length]+'",at:'+Date.now()+'},';
+o.value=l+(o.value?"\n"+o.value:"");f.reset();m.textContent="Linie adăugată.";};
+$("#cp").onclick=async()=>{if(!o.value){m.textContent="Nu e nimic de copiat.";return}try{await navigator.clipboard.writeText(o.value);m.textContent="Copiat."}catch(e){o.select();document.execCommand("copy");m.textContent="Copiat."}};
+$("#cl").onclick=()=>{o.value="";m.textContent=""};
+</script></body></html>

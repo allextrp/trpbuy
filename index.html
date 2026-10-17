@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>trpbuy – curated finds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF2EC;--card:#fff;--ink:#1B2634;--mute:#5B6878;--line:#D5DDD3;--acc:#2F4BFF;--accink:#fff;--sun:#FFD23F;--sunink:#1B2634;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141B26;--card:#1E2837;--ink:#EAF0F7;--mute:#9AA8BA;--line:#2C394C;--acc:#7C90FF;--accink:#0F1626}}
+:root[data-theme="dark"]{--bg:#141B26;--card:#1E2837;--ink:#EAF0F7;--mute:#9AA8BA;--line:#2C394C;--acc:#7C90FF;--accink:#0F1626}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Figtree,system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif;margin:0;line-height:1.05}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{font:800 26px "Bricolage Grotesque",sans-serif;letter-spacing:-.02em}
+.logo span{background:var(--sun);color:var(--sunink);padding:0 8px;border-radius:6px;margin-left:2px}
+.tbtn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;cursor:pointer}
+.hero{padding:28px 0 26px}
+.hero h1{font-size:clamp(38px,7vw,76px);font-weight:800;letter-spacing:-.03em;max-width:13ch}
+.hero p{max-width:52ch;color:var(--mute);margin:14px 0 22px;font-size:18px}
+.search{display:flex;gap:10px;max-width:560px}
+.search input{flex:1;min-width:0;padding:14px 18px;border-radius:14px;border:2px solid var(--ink);background:var(--card)}
+.layout{display:grid;grid-template-columns:230px 1fr;gap:28px;padding-bottom:60px}
+aside{position:sticky;top:12px;align-self:start}
+aside h3{font-size:15px;margin:0 0 10px}
+.cats{display:flex;flex-direction:column;gap:6px;margin-bottom:24px;max-height:50vh;overflow-y:auto}
+.chip{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:var(--card);padding:10px 14px;border-radius:12px;cursor:pointer;text-align:left}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip small{opacity:.7}
+.field{display:block;margin-bottom:20px}
+.field select,.field input[type=range],.field input[type=number]{width:100%}.field input[type=number]{padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card)}
+.field select{padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card)}
+.field input[type=range]{accent-color:var(--acc)}
+.bar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{position:relative;aspect-ratio:1/.82;display:grid;place-items:center;border:0;cursor:pointer;width:100%}
+.thumb svg{width:46%;fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.fav{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;border:0;background:var(--card);cursor:pointer;font-size:18px;line-height:1}
+.tag{position:absolute;left:10px;top:10px;background:var(--sun);color:var(--sunink);font-weight:700;font-size:13px;padding:3px 10px;border-radius:999px}
+.info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.brand{font-size:14px;color:var(--mute)}
+.info h2{font-size:20px;font-weight:600}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px}
+.price{font:800 20px "Bricolage Grotesque",sans-serif}
+.btn{background:var(--acc);color:var(--accink);border:0;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.adm{display:grid;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:24px}.adm input,.adm select,.adm textarea{padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg)}.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media (max-width:820px){.g2{grid-template-columns:1fr}}
+.empty{padding:40px;border:2px dashed var(--line);border-radius:18px;text-align:center;color:var(--mute)}
+dialog{border:0;border-radius:22px;padding:0;max-width:760px;width:calc(100% - 28px);background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(10,16,26,.6)}
+.mod{display:grid;grid-template-columns:1fr 1fr}
+.mod .thumb{aspect-ratio:auto;min-height:280px;cursor:default}
+.mod .body{padding:24px;display:flex;flex-direction:column;gap:12px}
+.mod h2{font-size:30px}
+.body ul{margin:0;padding-left:20px}
+.body h3{font-size:15px;margin-bottom:4px}
+.close{align-self:flex-end;border:0;background:var(--bg);border-radius:50%;width:36px;height:36px;cursor:pointer}
+.score{display:flex;gap:4px}.score i{width:22px;height:8px;border-radius:4px;background:var(--line)}.score i.on{background:var(--acc)}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--mute);font-size:14px}
+@media (max-width:820px){.layout{grid-template-columns:1fr}aside{position:static}.cats{flex-direction:row;flex-wrap:wrap}.mod{grid-template-columns:1fr}.mod .thumb{min-height:200px}}
+@media (max-width:820px){.cats{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;max-height:none;padding-bottom:6px}.chip{white-space:nowrap;flex:none;gap:8px}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.info{padding:12px}.info h2{font-size:17px}.row{flex-wrap:wrap;gap:8px}.btn,.tbtn,.chip{min-height:40px}.wrap{padding:0 14px}.search{max-width:none}.hero p{font-size:16px}}
+@media (max-width:360px){.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.hero h1{animation:in .6s ease-out both}@keyframes in{from{opacity:0;transform:translateY(14px)}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="logo">trp<span>buy</span></div><button class="tbtn" id="theme" aria-label="Toggle theme">Theme</button></header>
+<section class="hero">
+<h1>Find it. Check it. Buy it.</h1>
+<p>Every product is tested before it makes the list.</p>
+<a class="btn" style="margin:0 0 20px" href="https://ikako.vip/r/kmstz" target="_blank" rel="sponsored noopener noreferrer">Sign up for coupons</a>
+<small style="display:block;margin:-12px 0 20px;color:var(--mute)">Affiliate link: we may earn a commission.</small>
+<form class="search" onsubmit="return false"><input id="q" type="search" placeholder="Search: boots, backpack, headphones..." aria-label="Search products"></form>
+</section>
+<section id="admin" hidden><form id="addf" class="adm"><h3 id="ft">Add product</h3>
+<div class="g2"><input name="n" placeholder="Product name" required><input name="b" placeholder="Brand (optional)"></div>
+<div class="g2"><input name="c" list="cl" placeholder="Category" required><datalist id="cl"></datalist><input name="p" type="number" min="0" step="0.01" placeholder="Price (USD)" required></div>
+<input name="u" type="url" placeholder="Link (https://...)" required>
+<div class="g2"><input name="img" type="file" accept="image/*" aria-label="Photo"></div>
+<div><button class="btn" type="submit" id="sub">Add product</button> <button class="btn ghost" type="button" id="cn" hidden>Cancel</button> <span id="msg" role="status"></span></div></form></section>
+<div class="layout">
+<aside>
+<h3>Categories</h3><div class="cats" id="cats"></div>
+<label class="field"><h3>Sort by</h3><select id="sort"><option value="pop">Newest first</option><option value="asc">Price: low to high</option><option value="desc">Price: high to low</option></select></label>
+<div class="field"><h3>Price ($)</h3><div class="g2" style="grid-template-columns:1fr 1fr;gap:8px"><input id="pmin" type="number" min="0" step="any" inputmode="decimal" placeholder="Min" aria-label="Minimum price"><input id="pmax" type="number" min="0" step="any" inputmode="decimal" placeholder="Max" aria-label="Maximum price"></div></div>
+<label class="field"><h3>Brand</h3><select id="brand"><option value="">All brands</option></select></label>
+<button class="chip" id="onlyfav" aria-pressed="false" style="width:100%">Favorites only <small id="fc">0</small></button>
+</aside>
+<main>
+<div class="bar"><strong id="count"></strong><span>Prices are approximate</span></div>
+<div class="grid" id="grid"></div>
+</main>
+</div>
+</div>
+<footer><div class="wrap"><p style="margin:0 0 12px;max-width:80ch">trpbuy does not sell products and is not affiliated with Kakobuy, Weidian, Taobao, 1688, Tmall or any brand or store mentioned or linked here. Some links are affiliate links: we may earn a commission at no extra cost to you.</p><button class="tbtn" data-l="d">Disclaimer</button> <button class="tbtn" data-l="p">Privacy &amp; cookies</button></div></footer>
+<dialog id="lg"></dialog>
+<dialog id="dlg"></dialog>
+<script>
+const ICON={Footwear:'<path d="M6 44h52v-6c-10 0-14-6-18-14l-8 4-8-6c-2 12-8 16-18 16z"/>',Clothing:'<path d="M20 10l-12 8 6 12 6-3v27h24V27l6 3 6-12-12-8c-2 5-6 7-12 7s-10-2-12-7z"/>',Accessories:'<path d="M14 22h36l4 34H10zM24 22v-6a8 8 0 0116 0v6"/>',Tech:'<path d="M12 40V32a20 20 0 0140 0v8M10 40h8v14h-8zM46 40h8v14h-8z"/>'};
+let P=[],db=null,admin=false;const COLS=["#CFE3D4","#F7D9C4","#C9D7F2","#F2CFD6","#E4D3C0","#D8CFF2"];
+const $=s=>document.querySelector(s);
+const DEF=["Archive", "Boots", "Shoes", "Slides", "IG Brands", "Shirts", "Polo Shirts", "Sweaters", "Zip-Ups", "Hoodies", "Jackets", "Jeans & Pants", "Sweats", "Shorts", "Sets", "Room Decoration", "Bags", "Backpacks", "Socks", "Underwear", "Accessories", "Jewellery", "Girl", "Puffer", "Longsleeves"];const iconFor=c=>/boot|shoe|slide/i.test(c)?ICON.Footwear:/bag|pack/i.test(c)?ICON.Accessories:/electr/i.test(c)?ICON.Tech:/shirt|top|henley|zip|sweat|hood|jacket|jean|pant|short|set|polo|flannel|sleeve/i.test(c)?ICON.Clothing:'<rect x="14" y="14" width="36" height="36" rx="6"/>';
+const catList=()=>["All",...[...new Set([...DEF,...P.map(x=>x.c)])].sort((a,b)=>a.localeCompare(b,"en",{sensitivity:"base"}))];
+let st={c:"All",q:"",sort:"pop",max:1e9,min:0,brand:"",fav:false,favs:new Set()};
+try{JSON.parse(localStorage.getItem("trpbuy-fav")||"[]").forEach(i=>st.favs.add(i))}catch(e){}
+const save=()=>{try{localStorage.setItem("trpbuy-fav",JSON.stringify([...st.favs]))}catch(e){}};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const lei=n=>"$"+n.toLocaleString("en-US");
+const thumb=(p,x="")=>`<div class="thumb" style="background:${p.col||"#CFE3D4"}"${x}>${p.img?`<img src="${p.img}" alt="" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">`:`<svg viewBox="0 0 64 64">${iconFor(p.c)}</svg>`}`;
+function render(){
+ $("#cats").innerHTML=catList().map(c=>`<button class="chip" aria-pressed="${st.c==c}" data-c="${c}">${c}<small>${c=="All"?P.length:P.filter(x=>x.c==c).length}</small></button>`).join("");
+$("#fc").textContent=st.favs.size;$("#onlyfav").setAttribute("aria-pressed",st.fav);
+ const bs=[...new Set(P.map(x=>x.b).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"en",{sensitivity:"base"}));if(st.brand&&!bs.includes(st.brand))st.brand="";
+ const bh='<option value="">All brands</option>'+bs.map(b=>`<option value="${esc(b)}">${esc(b)}</option>`).join("");if(bh!==window._bh){window._bh=bh;$("#brand").innerHTML=bh}$("#brand").value=st.brand;
+ let l=P.map((p,i)=>({...p,i})).filter(p=>(st.c=="All"||p.c==st.c)&&p.p>=st.min&&p.p<=st.max&&(!st.brand||p.b==st.brand)&&(!st.fav||st.favs.has(p.id))&&(p.n+" "+p.b+" "+p.c).toLowerCase().includes(st.q));
+ l.sort((a,b)=>st.sort=="asc"?a.p-b.p:st.sort=="desc"?b.p-a.p:(b.at||0)-(a.at||0));
+ $("#count").textContent=l.length+(l.length==1?" product":" products");
+ $("#grid").innerHTML=l.length?l.map(p=>`<article class="card">${thumb(p,` data-o="${p.i}" role="button" tabindex="0" aria-label="View link: ${p.n}"`)}${p.t?`<span class="tag">${p.t}</span>`:""}<button class="fav" data-f="${p.id}" aria-label="Favorite" aria-pressed="${st.favs.has(p.id)}">${st.favs.has(p.id)?"♥":"♡"}</button></div><div class="info"><span class="brand">${p.b}</span><h2>${p.n}</h2><div class="row"><span class="price">${lei(p.p)}</span>${p.u?`<a class="btn ghost" href="${p.u}" target="_blank" rel="sponsored noopener noreferrer">Link</a>`:`<button class="btn ghost" data-o="${p.i}">Link</button>`}${admin?`<button class="btn ghost" data-d="${p.id}" aria-label="Delete product">✕</button><button class="btn ghost" data-e="${p.id}" aria-label="Edit product">✎</button>`:""}</div></div></article>`).join(""):`<div class="empty" style="grid-column:1/-1">${P.length?"No products match. Raise the max price or clear the search.":"No products yet."}</div>`;
+}
+function open(i){const p=P[i];
+ $("#dlg").innerHTML=`<div class="mod">${thumb(p)}</div><div class="body"><button class="close" aria-label="Close" id="x">✕</button><span class="brand">${p.b} · ${p.c}</span><h2>${p.n}</h2><div class="row"><span class="price">${lei(p.p)}</span>${p.u?`<a class="btn" href="${p.u}" target="_blank" rel="sponsored noopener noreferrer">View deal</a>`:`<span class="btn ghost">Link unavailable</span>`}</div></div>`;
+ $("#dlg").showModal();$("#x").onclick=()=>$("#dlg").close();}
+document.addEventListener("click",e=>{
+ const c=e.target.closest("[data-c]"),f=e.target.closest("[data-f]"),o=e.target.closest("[data-o]");
+ if(c){st.c=c.dataset.c;render()}else if(f){e.stopPropagation();const i=f.dataset.f;st.favs.has(i)?st.favs.delete(i):st.favs.add(i);save();render()}else if(o)open(+o.dataset.o);
+ if(e.target==$("#dlg"))$("#dlg").close();
+});
+document.addEventListener("keydown",e=>{const o=e.target.closest&&e.target.closest("[data-o][role=button]");if(o&&(e.key=="Enter"||e.key==" ")){e.preventDefault();open(+o.dataset.o)}});
+$("#q").oninput=e=>{st.q=e.target.value.toLowerCase().trim();render()};
+$("#sort").onchange=e=>{st.sort=e.target.value;render()};
+$("#pmin").oninput=e=>{st.min=e.target.value===""?0:+e.target.value;render()};
+$("#pmax").oninput=e=>{st.max=e.target.value===""?1e9:+e.target.value;render()};
+$("#brand").onchange=e=>{st.brand=e.target.value;render()};
+$("#onlyfav").onclick=()=>{st.fav=!st.fav;render()};
+$("#theme").onclick=()=>{const r=document.documentElement,d=getComputedStyle(r).getPropertyValue("--bg").trim()=="#141B26";r.dataset.theme=d?"light":"dark"};
+render();
+document.addEventListener("click",async e=>{const d=e.target.closest("[data-d]");if(d&&db&&confirm("Delete this product?"))try{await db.collection("products").doc(d.dataset.d).delete()}catch(x){alert("Could not delete.")}});
+$("#addf").onsubmit=async e=>{e.preventDefault();const f=e.target,m=$("#msg"),fd=new FormData(f),v=k=>String(fd.get(k)||"").trim(),L=k=>v(k).split("\n").map(x=>x.trim()).filter(Boolean);m.textContent="Saving...";
+try{const old=editId?P.find(x=>x.id==editId):null;let img=(old&&old.img)||"";const file=fd.get("img");if(file&&file.size){const a=await claude.use("assets");if(a)img=(await a.upload(file)).url}
+const c=v("c");await db.collection("products").doc(editId||crypto.randomUUID().slice(0,12)).set({n:v("n"),b:v("b")||"Unbranded",c,u:v("u"),p:Number(v("p")),img,col:COLS[[...c].reduce((a,x)=>a+x.charCodeAt(0),0)%COLS.length],at:old&&old.at?old.at:Date.now()});f.reset();m.textContent=editId?"Saved.":"Added.";stopEdit(true)}catch(x){m.textContent="Could not save: "+(x.message||x.code||"error")}};
+(async()=>{try{const[u,d]=await Promise.all([claude.use("user"),claude.use("db")]);if(u)admin=await u.canEdit();
+if(d){db=d;d.collection("products").onSnapshot(sn=>{P=sn.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>(b.at||0)-(a.at||0));$("#cl").innerHTML=catList().slice(1).map(c=>`<option value="${c}">`).join("");render()},()=>{})}
+$("#admin").hidden=!(admin&&db);render()}catch(e){}})();
+const LG={"d": ["Disclaimer", "<p style=\"margin:0\">trpbuy is not affiliated with Kakobuy, Weidian, Taobao, 1688, Tmall or any other shopping platform or agent mentioned or linked here. This website is not an official offer of those platforms, and all trademarks belong to their owners.</p><p style=\"margin:0\">Some links on this site are affiliate links. This includes the Link buttons, the coupon sign-up button and links inside images. If you sign up or buy through them, we may earn a commission at no extra cost to you.</p><p style=\"margin:0\">trpbuy is not an online store and does not sell, ship or handle any product. Product details, prices and photos come from third parties and may change or be inaccurate. You are responsible for checking that a product is legal to buy, import and use where you live, and for following customs rules. Nothing here is legal or financial advice.</p>"], "p": ["Privacy Policy", "<h3 style=\"margin:6px 0 0\">Collecting personal data</h3><p style=\"margin:0\">trpbuy does not ask visitors to create an account or fill in forms, and we do not collect your name, email address, phone number or postal address. If that changes, we will ask for your consent first and update this page.</p><h3 style=\"margin:6px 0 0\">Use of personal data</h3><p style=\"margin:0\">Your favorites are saved only in your own browser (local storage) and never reach us. We do not use any data about you for marketing.</p><h3 style=\"margin:6px 0 0\">Protection of personal data</h3><p style=\"margin:0\">Because we hold no personal data about visitors, there is none for us to store on our servers. The page loads fonts from Google Fonts, which may receive your IP address.</p><h3 style=\"margin:6px 0 0\">Access to your data</h3><p style=\"margin:0\">You can delete your favorites at any time by clearing your browser data. For any question about your data, or to exercise your rights under the GDPR, write to [add your email here].</p><h3 style=\"margin:6px 0 0\">Disclosure of personal data</h3><p style=\"margin:0\">We do not sell or share personal data with third parties, unless the law requires it or you explicitly consent.</p><h3 style=\"margin:6px 0 0\">Links to other websites</h3><p style=\"margin:0\">This website links to other sites, including Kakobuy. They have their own privacy and cookie policies, and affiliate partners may set cookies when you click through. We are not responsible for their practices, so please read their policies.</p><h3 style=\"margin:6px 0 0\">Changes to this policy</h3><p style=\"margin:0\">This policy may be updated from time to time.</p>"]};document.addEventListener("click",e=>{const b=e.target.closest("[data-l]"),g=$("#lg");if(b){const t=LG[b.dataset.l];g.innerHTML=`<div style="padding:24px;display:flex;flex-direction:column;gap:12px"><button class="close" aria-label="Close" id="lx">✕</button><h2>${t[0]}</h2><div style="display:flex;flex-direction:column;gap:10px">${t[1]}</div></div>`;g.showModal();$("#lx").onclick=()=>g.close()}else if(e.target==g)g.close()});
+let editId=null;
+function stopEdit(keep){editId=null;$("#ft").textContent="Add product";$("#sub").textContent="Add product";$("#cn").hidden=true;if(!keep)$("#addf").reset()}
+$("#cn").onclick=()=>stopEdit();
+document.addEventListener("click",e=>{const b=e.target.closest("[data-e]");if(!b)return;const p=P.find(x=>x.id==b.dataset.e);if(!p)return;const f=$("#addf");editId=p.id;f.n.value=p.n;f.b.value=p.b=="Unbranded"?"":p.b;f.c.value=p.c;f.p.value=p.p;f.u.value=p.u;f.img.value="";$("#ft").textContent="Edit product (leave photo empty to keep the current one)";$("#sub").textContent="Save changes";$("#cn").hidden=false;$("#msg").textContent="";f.scrollIntoView({behavior:"smooth"})});
+</script>
+</body>
+</html>
